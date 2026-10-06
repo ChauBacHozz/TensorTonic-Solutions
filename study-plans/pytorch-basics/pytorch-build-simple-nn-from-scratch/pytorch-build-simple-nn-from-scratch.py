@@ -4,13 +4,13 @@ import torch.nn as nn
 class SimpleNet(nn.Module):
     def __init__(self, in_features: int, hidden_size: int, out_features: int):
         super().__init__()
-        self.h1 = nn.Linear(in_features, hidden_size)
-        self.h2 = nn.Linear(hidden_size, out_features)
+        self.layer_1 = nn.Linear(in_features,hidden_size)
+        self.activation = nn.ReLU()
+        self.layer_2 = nn.Linear(hidden_size,out_features)
+        
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """
-        Returns a float32 tensor of shape (batch, out_features).
-        """
-        h1_out = nn.ReLU()(self.h1(x))
-        h2_out = self.h2(h1_out)
-        return h2_out
+        out_layer_1 = self.layer_1(x)
+        activation_1 = self.activation(out_layer_1)
+        out_layer_2 = self.layer_2(activation_1)
+        return out_layer_2
